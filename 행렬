@@ -1,0 +1,28 @@
+import sys
+
+N, M = map(int,sys.stdin.readline().split())
+Change_matrix = [list(map(int,sys.stdin.readline().strip())) for _ in range(N)] # 이렇게 표현하면 이중 for문을 사용하지 않고 간편하게 나타낼 수 
+Result_matrix = [list(map(int,sys.stdin.readline().strip())) for _ in range(N)]
+count = 0
+
+def change_all_values(x,y,matrix):
+    for i in range(x,x+3):
+        for j in range(y,y+3):
+            matrix[i][j] = 1 - matrix[i][j]
+    return matrix
+
+for i in range(0,N-2):
+    for j in range(0,M-2):
+        if (Change_matrix[i][j] != Result_matrix[i][j]):
+            Change_matrix = change_all_values(i,j,Change_matrix)
+            count += 1
+
+for i in range(0,N):
+    for j in range(0,M):
+        if (Change_matrix[i][j] != Result_matrix[i][j]):
+            print(-1)
+            exit()
+
+print(count)
+
+
