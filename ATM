@@ -1,0 +1,15 @@
+import sys
+
+N = int(sys.stdin.readline().strip())
+
+ATM_list = list(map(int,sys.stdin.readline().split()))
+ATM_list.sort()
+
+min_sum = 0
+sum_value = 0
+
+for i in range(N):
+    sum_value += ATM_list[i]
+    min_sum +=  sum_value
+
+print(min_sum)
