@@ -1,0 +1,16 @@
+import sys
+
+N, K = map(int,sys.stdin.readline().split())
+coin_list = [int(sys.stdin.readline().strip()) for _ in range(N)]
+
+count = 0
+
+
+for i in range(N-1,-1,-1):
+    coin = coin_list[i]
+    if (K >= coin):
+        share = K // coin       
+        K -= share * coin
+        count += share
+
+print(count)
