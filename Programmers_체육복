@@ -1,0 +1,42 @@
+다음과 같은 방법으로 코딩을 해봤는데 테스트케이스 12개중 5, 7, 10 번에서 에러가 발생했다.
+잘 읽지 않으면 놓칠 수도 있는 제한사항 중 "여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다. 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며, 
+남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다." 을 적용했고 reserve의 원소 값을 기준으로 왼쪽부터 lost가 존재하는지 확인하는 과정도
+점검 했지만 계속 에러가 발생했다.
+
+    def solution(n, lost, reserve):
+        student_list = [0] * n
+
+        for i in lost:
+            student_list[i-1] -= 1
+        for i in reserve:
+            student_list[i-1] += 1
+
+        for i in range(1,n):
+            if (student_list[i] == -1):
+                if (student_list[i-1] == 1):
+                    student_list[i] += 1
+                    student_list[i-1] -= 1 
+
+        if (student_list[0] == -1):
+            if (student_list[1] == 1):
+                student_list[0] += 1 
+
+        return student_list.count(0) + student_list.count(1)
+        
+        
+도무지 알 수가 없어서 정답을 찾아봤더니 다음과 같이 풀더라.
+
+
+def solution(n, lost, reserve):
+    set_reserve = set(reserve) - set(lost)
+    set_lost = set(lost) - set(reserve)
+    
+    for i in set_reserve:
+        if i-1 in set_lost:
+            set_lost.remove(i-1)
+        elif i+1 in set_lost:
+            set_lost.remove(i+1)
+            
+    return n - len(set_lost)
+    
+이렇게 풀 수 있다라는 것도 알고는 있었다. 하지만 내가 한 방식에 오류가 없다고 생각하는데 왜 안되는지 잘 모르겠다...
