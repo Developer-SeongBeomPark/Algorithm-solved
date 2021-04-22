@@ -1,0 +1,22 @@
+def solution(number, k):
+    number = list(map(int,number))
+    is_changed = False
+    for _ in range(k):
+        n = len(number)
+        for i in range(n-1):
+            if (number[i] < number[i+1]):
+                number.pop(i)
+                is_changed = True
+                break
+        if (is_changed == False):
+            number.remove(min(number))
+
+    answer = ''
+    for i in range(len(number)):
+        answer += str(number[i])
+
+    return answer
+    
+이렇게 푸니까 하나의 테스트 케이스에 대해서 시간 초과가 발생한다.
+알아보니 맨 처음 number = list(map(int,number))로 인해서 너무나 많은 시간을 사용해서 그렇단다
+문자열을 사용해도 숫자비교가 된다고 한다.(몰랐네.....) 내일 다시 풀어보는걸로!
