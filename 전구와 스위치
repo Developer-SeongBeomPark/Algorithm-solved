@@ -1,0 +1,50 @@
+import sys
+from copy import copy
+
+N  = int(sys.stdin.readline().strip())
+Change_bulb_list = list(map(int,sys.stdin.readline().strip()))
+Result_bulb_list = list(map(int,sys.stdin.readline().strip()))
+Change_bulb_list_copy = copy(Change_bulb_list)
+count = 0
+i = 0
+
+def Switch(x,arr):
+    arr[x] = 1 - arr[x]
+    if (x == 0):
+        arr[x+1] = 1 - arr[x+1]
+    elif (x == N-1):
+        arr[x-1] = 1 - arr[x-1]
+    else:
+        arr[x-1] = 1 - arr[x-1]
+        arr[x+1] = 1 - arr[x+1]
+    return arr
+
+# 첫 번째 스위치를 누르지 않은 경우
+for i in range(N-1):
+    if (Change_bulb_list[i] != Result_bulb_list[i]):
+        Change_bulb_list = Switch(i+1,Change_bulb_list)
+        count += 1
+
+if (Change_bulb_list != Result_bulb_list):
+    Change_bulb_list = Change_bulb_list_copy
+    count = 0
+    # 첫 번째 스위치를 누른 경우
+    Change_bulb_list = Switch(0,Change_bulb_list)
+    count += 1
+    for i in range(N-1):
+        if (Change_bulb_list[i] != Result_bulb_list[i]):
+            Change_bulb_list = Switch(i+1,Change_bulb_list)
+            count += 1
+
+if (Change_bulb_list != Result_bulb_list):
+    print(-1)
+else:
+    print(count)
+
+######################################################################
+처음 딱 이 문제를 맞닥뜨렸을때, 아무 생각도 나지 않았다. 도대체 이걸 그리디로 어떻게 풀어야하는건지.... 30분 넘게 쳐다봐도 아무 생각이 안떠올라서 다른 문제부터 풀었다.
+먼저 "행렬"이라는 문제를 풀어보고 난 뒤에(물론 "행렬"문제도 못풀겠어서 다른 사람들의 풀이를 보고 이해함) 그 문제와 유사하게 풀어가면 풀 수 있겠다는 생각이 들었다.
+
+첫 번째 인덱스부터 비교해가며 다르면 해당 인덱스 + 1의 스위치를 ON 하는 알고리즘까진 생각했다.(이렇게 해야 만약 해당 인덱스의 값이 같다면 그 값은 고정시켜놓고 나머지 값들을 비교할
+수 있으니까.)
+내가 놓친 점은 첫 번째 스위치를 키는 경우와 안 키는 경우로 나뉜다는 점이다. 그래서 그 두 가지를 고려해서 코드를 추가했다.
