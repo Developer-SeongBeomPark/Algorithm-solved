@@ -1,0 +1,21 @@
+import sys
+
+n = int(sys.stdin.readline().strip())
+
+dp = [1,2,4]
+answer_list = []
+
+for _ in range(n):
+    value = int(sys.stdin.readline().strip())
+    answer_list.append(value)
+
+for i in range(3, max(answer_list)):
+    dp.append(dp[i-1] + dp[i-2] + dp[i-3])
+    
+
+for i in answer_list:
+    print(dp[i - 1] % 1000000009)
+    
+
+
+3개의 값을 더해가는 피보나치 수열인 것만 파악할 수 있다면 어렵지 않게 풀 수 있다
