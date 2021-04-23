@@ -1,3 +1,5 @@
+4/22 첫 도전
+
 def solution(number, k):
     number = list(map(int,number))
     is_changed = False
@@ -17,6 +19,38 @@ def solution(number, k):
 
     return answer
     
-이렇게 푸니까 하나의 테스트 케이스에 대해서 시간 초과가 발생한다.
+이렇게 푸니까 10번 테스트 케이스에 대해서 시간 초과가 발생한다.
 알아보니 맨 처음 number = list(map(int,number))로 인해서 너무나 많은 시간을 사용해서 그렇단다
 문자열을 사용해도 숫자비교가 된다고 한다.(몰랐네.....) 내일 다시 풀어보는걸로!
+
+
+
+4/23 두 번째 도전!
+풀었던 사람들의 아이디어를 보고 도움을 받아서 다시 풀어봤다.
+생각을 조금 바꾸는게 핵심이었다. 원래 내가 했던 방식은 number에 존재하는 모든 숫자를 리스트에 넣어놓고 하나하나 비교해가며 데이터를 지우는 방식이었다.
+하지만 생각을 조금 바꾸어 보니 스택을 만들어 number[i]를 조건에 만족하는지 확인한 후 하나씩 넣어가는 방식으로 하니 앞선 방법보다 비교 횟수가 훨씬 줄어서 
+마의 10번 테스트케이스를 통과할 수 있었다.
+if (count != k):
+    for _ in range(k-count):
+        stack.pop()
+처음에 위의 코드가 없이 코드를 짰었다. 코드를 돌려보니 12번 테스트케이스에서 실패가 떴다.
+질문 카테고리에 들어가서 확인해 보았더니 예외 케이스가 있었다. 만약 number = "999" 고 k = 2 라면 답이 9가 나와야하는데
+위의 코드가 없다면 999가 그대로 출력된다. 이를 해결하기 위해 위의 코드를 추가했다.
+그리디 너무 어려운거 같다.
+        
+        
+
+def solution(number, k):
+    stack = [number[0]]
+    count = 0
+    for value in number[1:]:
+        stack.append(value)
+        while (len(stack) >= 2 and stack[-2] < stack[-1] and count != k):
+            stack.pop(-2)
+            count += 1
+              
+    if (count != k):
+        for _ in range(k-count):
+            stack.pop()
+    return ''.join(stack)
+
