@@ -1,1 +1,19 @@
 어떻게 해야할지 모르겠다... --;;
+일단 구현해봤다.
+
+import sys
+
+n = int(sys.stdin.readline().strip())
+arr = list(map(int,sys.stdin.readline().split()))
+dp = []
+sum_list = []
+
+for i in range(n):
+    if (arr[i] >= 0):
+        dp.append(arr[i])
+    elif (arr[i] < 0):
+        sum_list.append(sum(dp))
+        dp = []
+print(max(sum_list))
+
+##################################################
