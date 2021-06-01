@@ -1,0 +1,37 @@
+import sys
+
+cost = int(sys.stdin.readline().strip())
+return_money = 1000 - cost
+count = 0
+
+share_500 = return_money // 500
+if (share_500 > 0):
+    count += share_500
+    return_money -= 500 * share_500
+
+share_100 = return_money // 100
+if (share_100 > 0):
+    count += share_100
+    return_money -= 100 * share_100
+
+share_50 = return_money // 50
+if (share_50 > 0):
+    count += share_50
+    return_money -= 50 * share_50
+
+share_10 = return_money // 10
+if (share_10 > 0):
+    count += share_10
+    return_money -= 10 * share_10
+
+share_5 = return_money // 5
+if (share_5 > 0):
+    count += share_5
+    return_money -= 5 * share_5
+
+share_1 = return_money // 1
+if (share_1 > 0):
+    count += share_1
+    return_money -= share_1
+
+print(count)
